@@ -82,7 +82,7 @@ public class Model
         faces = new List<Vector3Int>();
 
         //Front
-        faces.Add(new Vector3Int(0, 2, 5));
+        faces.Add(new Vector3Int(0,2,5));
         faces.Add(new Vector3Int(0,5,1));
         faces.Add(new Vector3Int(3,6,7));
         faces.Add(new Vector3Int(3,7,4));
