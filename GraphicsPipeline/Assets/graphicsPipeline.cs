@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class graphicsPipeline : MonoBehaviour
 {
+    
     Model d;
     void Start()
     {
         d = new Model();
+     
     }
 
     // Update is called once per frame
