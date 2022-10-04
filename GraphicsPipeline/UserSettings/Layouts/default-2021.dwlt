@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Hierarchy
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 492}
   m_MaxSize: {x: 10000, y: 10000}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
-  controlID: 42
+  controlID: 21
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 113
+  controlID: 126
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -326,7 +326,7 @@ MonoBehaviour:
         m_IsRenaming: 0
         m_OriginalEventType: 11
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 7}
+        m_ClientGUIView: {fileID: 0}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_LastFolders:
   - Assets
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\t00216714\Desktop\intials\GraphicsPipeline
+  m_LastProjectPath: C:\Users\t00216714\Desktop\initials\GraphicsPipeline
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
@@ -486,7 +486,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -832,9 +832,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -2.9873617, y: -0.5764237, z: 13.071629}
+    m_Target: {x: 0.2979375, y: 1.8378386, z: 0.74297047}
     speed: 2
-    m_Value: {x: -2.9873617, y: -0.5764237, z: 13.071629}
+    m_Value: {x: 0.2979375, y: 1.8378386, z: 0.74297047}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -881,13 +881,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.1404394, y: -0.038611438, z: 0.0055515035, w: 0.9894432}
+    m_Target: {x: 0.0023970858, y: 0.031494442, z: -0.000075727025, w: 0.99950296}
     speed: 2
-    m_Value: {x: 0.14337207, y: -0.041556437, z: 0.006096829, w: 0.9887772}
+    m_Value: {x: 0.002397081, y: 0.031494383, z: -0.00007572688, w: 0.99950105}
   m_Size:
-    m_Target: 10
+    m_Target: 3.6742346
     speed: 2
-    m_Value: 10
+    m_Value: 3.6742346
   m_Ortho:
     m_Target: 0
     speed: 2
