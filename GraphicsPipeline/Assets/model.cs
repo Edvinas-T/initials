@@ -214,11 +214,11 @@ public class Model
        //   print_matrix(translateMatrix);
 
         Matrix4x4 AIO = translateMatrix * scaleMatrix * rotationMatrix;
-
+      //  print_matrix(AIO);
 
         
         List<Vector3> image_after_rotation = get_image(vertices, rotationMatrix);
-        //  print_verts(image_after_rotation); 
+          print_verts(image_after_rotation); 
        List<Vector3> image_after_scale = get_image(image_after_rotation, scaleMatrix);
         //  print_verts(image_after_scale);
        List<Vector3> image_after_translate = get_image(image_after_scale, translateMatrix);
@@ -226,9 +226,46 @@ public class Model
 
 
         List<Vector3> image_after_transformations = get_image(vertices, AIO);
-     print_verts(image_after_transformations);
+    // print_verts(image_after_transformations);
 
+        Matrix4x4 viewingMatrix = Matrix4x4.LookAt(new Vector3(18,5,52), (new Vector3(2,4,2)).normalized, (new Vector3(3,2,16)).normalized);
+        //  print_matrix(viewingMatrix);
+        List<Vector3> imageAfterViewing = get_image(image_after_transformations, viewingMatrix);
+        //print_verts(imageAfterViewing);
+
+        Matrix4x4 projMatrix = Matrix4x4.Perspective(90, 1, 1, 1000);
+       // print_matrix(projMatrix);
+        List<Vector3> finalImage = get_image(imageAfterViewing, projMatrix);
+        //  print_verts(finalImage);
+
+        Matrix4x4 matrix4Everything = projMatrix * viewingMatrix * AIO;
+       // print_matrix(matrix4Everything);
+        List<Vector3> finalImage2 = get_image(vertices, matrix4Everything);
+       // print_verts(finalImage2);
+
+       // ProjectionByHand(imageAfterViewing);
     }
+    private void ProjectionByHand(List<Vector3> image)
+    {
+        List<Vector2> projbyhand = new List<Vector2>();
+        foreach(Vector3 v in image)
+        {
+            projbyhand.Add(new Vector2(v.x / v.z, v.y / v.z));
+        }
+    }
+    private void print_2D(List<Vector2> v_list)
+    {
+        string path = "Assets/test.txt";
+        //Write some text to the test.txt file
+        StreamWriter writer = new StreamWriter(path, true);
+        foreach (Vector2 v in v_list)
+        {
+            writer.WriteLine(v.x.ToString() + "   ,   " + v.y.ToString());
+
+        }
+        writer.Close();
+    }
+
     private void print_verts(List<Vector3> v_list)
     {
         string path = "Assets/test.txt";
@@ -247,7 +284,7 @@ public class Model
         List<Vector3> hold = new List<Vector3>();
         foreach(Vector3 v in vertices)
         {
-            hold.Add(transformMatrix * v);
+            hold.Add(transformMatrix * new Vector4( v.x, v.y, v.z , 1));
         }
         return hold;
     }
