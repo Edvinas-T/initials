@@ -218,11 +218,11 @@ public class Model
 
         
         List<Vector3> image_after_rotation = get_image(vertices, rotationMatrix);
-          print_verts(image_after_rotation); 
+         // print_verts(image_after_rotation); 
        List<Vector3> image_after_scale = get_image(image_after_rotation, scaleMatrix);
         //  print_verts(image_after_scale);
        List<Vector3> image_after_translate = get_image(image_after_scale, translateMatrix);
-      //   print_verts(image_after_translate);
+        // print_verts(image_after_translate);
 
 
         List<Vector3> image_after_transformations = get_image(vertices, AIO);
@@ -231,19 +231,25 @@ public class Model
         Matrix4x4 viewingMatrix = Matrix4x4.LookAt(new Vector3(18,5,52), (new Vector3(2,4,2)).normalized, (new Vector3(3,2,16)).normalized);
         //  print_matrix(viewingMatrix);
         List<Vector3> imageAfterViewing = get_image(image_after_transformations, viewingMatrix);
-        //print_verts(imageAfterViewing);
+       // print_verts(imageAfterViewing);
 
         Matrix4x4 projMatrix = Matrix4x4.Perspective(90, 1, 1, 1000);
        // print_matrix(projMatrix);
         List<Vector3> finalImage = get_image(imageAfterViewing, projMatrix);
-        //  print_verts(finalImage);
+       //   print_verts(finalImage);
 
         Matrix4x4 matrix4Everything = projMatrix * viewingMatrix * AIO;
        // print_matrix(matrix4Everything);
         List<Vector3> finalImage2 = get_image(vertices, matrix4Everything);
-       // print_verts(finalImage2);
+        // print_verts(finalImage2);
 
-       // ProjectionByHand(imageAfterViewing);
+        List<Vector2> projectionByHand = new List<Vector2>();
+        foreach (Vector3 v in imageAfterViewing)
+        {
+            projectionByHand.Add(new Vector2(v.x / v.z, v.y / v.z));
+        }
+        print_2D(projectionByHand);
+        
     }
     private void ProjectionByHand(List<Vector3> image)
     {
