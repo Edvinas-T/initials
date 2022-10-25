@@ -5,7 +5,7 @@ using UnityEngine;
 public class Outcode
 {
 
-    bool UP, DOWN, LEFT, RIGHT;
+    public bool UP, DOWN, LEFT, RIGHT;
 
     public Outcode(Vector2 v)
     {
@@ -48,6 +48,7 @@ public class Outcode
     {
         return !(A == B);
     }
+    
 
     public void print(Outcode A)
     {
