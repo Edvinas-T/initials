@@ -9,6 +9,10 @@ public class graphicsPipeline : MonoBehaviour
     Outcode A = new Outcode(new Vector2(-2, -2));
     Outcode B = new Outcode(new Vector2(2, -2));
     Outcode C = new Outcode(new Vector2(0.2f, 0.1f));
+    Outcode D = new Outcode(new Vector2(0,0));
+    Outcode E = new Outcode(new Vector2(2, -2));
+    Outcode F = new Outcode(new Vector2(2, -2));
+
 
 
 
@@ -34,14 +38,14 @@ public class graphicsPipeline : MonoBehaviour
         Outcode endOutcode = new Outcode(end);
 
         Outcode inView = new Outcode();
-        if ((startOutcode + endOutcode) == inView)
+        if ((startOutcode * endOutcode) == inView)
         {
-            print("inview");
+            print("Trivial accept");
             return true;
         }
         if ((startOutcode * endOutcode) != inView)
         {
-            print("outofview");
+            print("Trivial reject");
             return false;
         }
 
