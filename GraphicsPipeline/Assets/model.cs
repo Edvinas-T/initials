@@ -7,10 +7,10 @@ using UnityEngine;
 public class Model
 {
     internal object renderer;
-    List<Vector3> vertices;
-    List<Vector3Int> faces;
-    List<Vector2> textureVertices;
-    List<Vector3Int> textureFaces;
+    internal List<Vector3> vertices;
+    internal List<Vector3Int> faces;
+    internal List<Vector2> textureVertices;
+    internal List<Vector3Int> textureFaces;
 
 
     public Model()
@@ -18,7 +18,7 @@ public class Model
         add_vertices();
         add_faces();
 
-        CreateUnityGameObject();
+        //CreateUnityGameObject();
     }
 
             public GameObject CreateUnityGameObject()
@@ -84,7 +84,7 @@ public class Model
     private void add_faces()
     {
         faces = new List<Vector3Int>();
-        textureFaces = new List<Vector3Int>();
+        textureFaces = new List<Vector3Int>();       
 
         //Front
         faces.Add(new Vector3Int(0,2,5));       
@@ -123,8 +123,7 @@ public class Model
 
         textureFaces.Add(new Vector3Int(0, 1, 11));
         textureFaces.Add(new Vector3Int(0, 11, 10));
-        
-        
+         
                 //Left
         faces.Add(new Vector3Int(0, 10, 12));
         faces.Add(new Vector3Int(0, 12, 2));
@@ -166,12 +165,8 @@ public class Model
         textureFaces.Add(new Vector3Int(2, 12, 13));
         textureFaces.Add(new Vector3Int(2, 13, 3));
         textureFaces.Add(new Vector3Int(4, 14, 15));
-        textureFaces.Add(new Vector3Int(4, 15, 5));
-
-
-            
-
-
+        textureFaces.Add(new Vector3Int(4, 15, 5)); 
+       
     }
 
     private void add_vertices()
@@ -285,7 +280,7 @@ public class Model
         writer.Close();
     }
 
-    private List<Vector3> get_image(List<Vector3> vertices, Matrix4x4 transformMatrix)
+    internal List<Vector3> get_image(List<Vector3> vertices, Matrix4x4 transformMatrix)
     {
         List<Vector3> hold = new List<Vector3>();
         foreach(Vector3 v in vertices)
@@ -321,4 +316,6 @@ public class Model
         }
         return hold;
     }
+
+
 }
