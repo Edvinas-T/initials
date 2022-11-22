@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class graphicsPipeline : MonoBehaviour
 {
-    
+    float z = 5, angle;
     Model d;
     Outcode A = new Outcode(new Vector2(-2, -2));
     Outcode B = new Outcode(new Vector2(2, -2));
@@ -15,33 +15,64 @@ public class graphicsPipeline : MonoBehaviour
     Outcode F = new Outcode(new Vector2(2, -2));
 
     Texture2D ourScreen;
-
+    Renderer screenPlane;
 
     void Start()
     {
-       // d = new Model();
-
-      //  A.print(A);
-      //  B.print(B);
-      //  C.print(C);
-        Vector2 start = new Vector2(0.5f, 0.5f);
-        Vector2 end = new Vector2(0.0f, 0.0f);
-
-        // LineClip(ref start,ref end);
-
-        ourScreen = new Texture2D(512, 512);
-        Renderer screenPlane = FindObjectOfType<Renderer>();
-        screenPlane.material.mainTexture = ourScreen;
-
-        if(LineClip(ref start, ref end))
-        {
-            plot(bresh(Convert(start), Convert(end)));
-        }
-
-        
+      
+        screenPlane = FindObjectOfType<Renderer>();
+        d = new Model();
 
         //bresh(start, end);
-        
+
+    }
+
+
+  void Update()
+    {
+        List<Vector3> verts = d.vertices;
+
+        Matrix4x4 translate = Matrix4x4.TRS(new Vector3(0, 0, 10), Quaternion.identity, Vector3.one);
+        Matrix4x4 rotate = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(angle, Vector3.right), Vector3.one);
+        Matrix4x4 projection = Matrix4x4.Perspective(90, 1, 1, 1000);
+        z += 0.05f;
+        angle++;
+
+        Matrix4x4 allTrans = projection *rotate* translate;
+
+        List<Vector3> imageAfter = d.get_image(verts, allTrans);
+        if (ourScreen)
+            Destroy(ourScreen);
+        ourScreen = new Texture2D(512, 512);
+        screenPlane.material.mainTexture = ourScreen;
+
+        foreach (Vector3Int face in d.faces)
+        {
+            drawline(imageAfter[face.x], imageAfter[face.y]);
+
+            drawline(imageAfter[face.y], imageAfter[face.z]);
+
+            drawline(imageAfter[face.z], imageAfter[face.x]);
+        }
+
+        ourScreen.Apply();
+
+    }
+
+    private void drawline(Vector3 v13dH, Vector3 v23dH)
+    {
+        print(v13dH.ToString());
+
+        if ((v13dH.z < 0) && (v23dH.z < 0))
+        {
+            Vector2 v1 = new Vector2(v13dH.x / v13dH.z, v13dH.y / v13dH.z);
+            Vector2 v2 = new Vector2(v23dH.x / v23dH.z, v23dH.y / v23dH.z);
+            if (LineClip(ref v1, ref v2))
+            {
+                print("Line from " + v1.ToString() + " to " + v2.ToString());
+                plot(bresh(Convert(v1), Convert(v2)));
+            }
+        }
     }
 
     private void plot(List<Vector2Int> vList)
@@ -50,7 +81,7 @@ public class graphicsPipeline : MonoBehaviour
         {
             ourScreen.SetPixel(v.x, v.y, Color.red);
         }
-        ourScreen.Apply();
+     
     }
 
     private Vector2Int Convert(Vector2 v)
@@ -67,7 +98,7 @@ public class graphicsPipeline : MonoBehaviour
         Outcode endOutcode = new Outcode(end);
 
         Outcode inView = new Outcode();
-        if ((startOutcode * endOutcode) == inView)
+        if ((startOutcode + endOutcode) == inView)
         {
             print("Trivial accept");
             return true;
