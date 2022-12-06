@@ -38,7 +38,7 @@ public class graphicsPipeline : MonoBehaviour
         z += 0.05f;
         angle++;
 
-        Matrix4x4 allTrans = projection *rotate* translate;
+        Matrix4x4 allTrans = projection * rotate * translate;
 
         List<Vector3> imageAfter = d.get_image(verts, allTrans);
         if (ourScreen)
@@ -46,22 +46,77 @@ public class graphicsPipeline : MonoBehaviour
         ourScreen = new Texture2D(512, 512);
         screenPlane.material.mainTexture = ourScreen;
 
+
+
         foreach (Vector3Int face in d.faces)
         {
-            drawline(imageAfter[face.x], imageAfter[face.y]);
+            Vector2 v1, v2, v3;
 
-            drawline(imageAfter[face.y], imageAfter[face.z]);
+            v1 = divideZ(imageAfter[face.x]);
+            v2 = divideZ(imageAfter[face.y]);
+            v3 = divideZ(imageAfter[face.z]);
 
-            drawline(imageAfter[face.z], imageAfter[face.x]);
+
+            if ((Vector3.Cross(v2 - v1, v3 - v2).z <= 0)  && testZ(imageAfter[face.x], imageAfter[face.y],imageAfter[face.z]))
+            {
+
+
+                drawline(imageAfter[face.x], imageAfter[face.y]);
+
+
+                drawline(imageAfter[face.y], imageAfter[face.z]);
+
+
+                drawline(imageAfter[face.z], imageAfter[face.x]);
+
+                print("Centre " + Convert((v1 + v2 + v3) / 3));
+                print(Convert(v1));
+                print(Convert(v2));
+                print(Convert(v3));
+
+                floodFill(Convert((v1 + v2 + v3) / 3));
+            }
+
+           
         }
+      
 
         ourScreen.Apply();
 
     }
 
+    private bool testZ(Vector3 v1, Vector3 v2, Vector3 v3)
+    {
+        return !((v1.z > 0) || (v2.z > 0) || (v3.z > 0));
+    }
+
+    private void floodFill(Vector2Int p)
+    {
+      
+        if (isValidPosition(p)  && ourScreen.GetPixel(p.x, p.y) != Color.red)
+        {
+            ourScreen.SetPixel(p.x, p.y, Color.red);
+            floodFill(p + Vector2Int.up);
+            floodFill(p + Vector2Int.down);
+            floodFill(p + Vector2Int.left);
+            floodFill(p + Vector2Int.right);
+        };
+
+    }
+
+    private bool isValidPosition(Vector2Int p)
+    {
+        return (p.x >= 0) && (p.y >= 0) && (p.x < ourScreen.width) && (p.y < ourScreen.height);
+    }
+
+    private Vector2 divideZ(Vector3 v)
+    {
+        return new Vector2(v.x / v.z, v.y / v.z);
+    }
+
     private void drawline(Vector3 v13dH, Vector3 v23dH)
     {
-        print(v13dH.ToString());
+     //   print(v13dH.ToString());
 
         if ((v13dH.z < 0) && (v23dH.z < 0))
         {
@@ -69,7 +124,7 @@ public class graphicsPipeline : MonoBehaviour
             Vector2 v2 = new Vector2(v23dH.x / v23dH.z, v23dH.y / v23dH.z);
             if (LineClip(ref v1, ref v2))
             {
-                print("Line from " + v1.ToString() + " to " + v2.ToString());
+              //  print("Line from " + v1.ToString() + " to " + v2.ToString());
                 plot(bresh(Convert(v1), Convert(v2)));
             }
         }
@@ -100,12 +155,12 @@ public class graphicsPipeline : MonoBehaviour
         Outcode inView = new Outcode();
         if ((startOutcode + endOutcode) == inView)
         {
-            print("Trivial accept");
+         //   print("Trivial accept");
             return true;
         }
         if ((startOutcode * endOutcode) != inView)
         {
-            print("Trivial reject");
+        //    print("Trivial reject");
             return false;
         }
 
